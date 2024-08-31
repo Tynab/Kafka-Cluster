@@ -1,2 +1,2 @@
 # BITNAMI KAFKA
-Bitnami Kafka with Docker Compose.
+Bitnami Kafka cluster with Docker Compose.
