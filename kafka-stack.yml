@@ -1,8 +1,9 @@
-version: '3.8'
+version: "3.8"
 
 services:
   zookeeper:
     image: bitnami/zookeeper:${ZOOKEEPER_VERSION}
+    hostname: zookeeper
     ports:
       - 2181:2181
     environment:
@@ -22,6 +23,7 @@ services:
 
   kafka:
     image: bitnami/kafka:${KAFKA_VERSION}
+    hostname: kafka
     ports:
       - 9092:9092
       - 9093:9093
@@ -57,7 +59,7 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:${KAFKA_UI_VERSION}
-    container_name: kafkaui
+    hostname: kafkaui
     ports:
       - 8080:8080
     environment:
