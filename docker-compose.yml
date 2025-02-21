@@ -1,9 +1,9 @@
-version: "3.8"
+version: '3.8'
 
 services:
   zookeeper:
     image: bitnami/zookeeper:${ZOOKEEPER_VERSION}
-    hostname: zookeeper
+    container_name: zookeeper
     ports:
       - 2181:2181
     environment:
@@ -14,16 +14,11 @@ services:
       ZOO_CLIENT_PASSWORD: ${KAFKA_DEFAULT_PASSWORDS:-}
     networks:
       - yan
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == yan
-      restart_policy:
-        condition: any
+    restart: unless-stopped
 
   kafka:
     image: bitnami/kafka:${KAFKA_VERSION}
-    hostname: kafka
+    container_name: kafka
     ports:
       - 9092:9092
       - 9093:9093
@@ -50,16 +45,11 @@ services:
       - yan
     depends_on:
       - zookeeper
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == yan
-      restart_policy:
-        condition: any
+    restart: unless-stopped
 
   kafka-ui:
     image: provectuslabs/kafka-ui:${KAFKA_UI_VERSION}
-    hostname: kafkaui
+    container_name: kafkaui
     ports:
       - 8080:8080
     environment:
@@ -76,13 +66,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == tynab
-      restart_policy:
-        condition: any
+    restart: unless-stopped
 
 networks:
   yan:
-    driver: overlay
+    driver: bridge
